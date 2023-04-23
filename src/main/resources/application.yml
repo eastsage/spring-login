@@ -13,6 +13,14 @@ spring:
       format_sql: true
       ddl-auto: create
 
+  server:
+    servlet:
+      session:
+      timeout: 30m
+
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace
+
+jwt:
+  secret: um.jun.sik.code

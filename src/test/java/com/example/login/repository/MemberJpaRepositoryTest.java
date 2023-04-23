@@ -1,13 +1,11 @@
 package com.example.login.repository;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.login.entity.Member;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,8 +22,8 @@ class MemberJpaRepositoryTest {
 
     @Test
     public void basicCURD() {
-        Member member1 = new Member("member1", "1234", "sd@sd.com", "jun");
-        Member member2 = new Member("member2", "1234", "sd@sd.com", "harry");
+        Member member1 = new Member("membermembe", "asdasdASD!@#", "sd@sd.com", "김정은");
+        Member member2 = new Member("membermember", "asdASDasd!@#", "sd@sd.com", "김일성");
         memberJpaRepository.save(member1);
         memberJpaRepository.save(member2);
 
@@ -34,6 +32,11 @@ class MemberJpaRepositoryTest {
         Member findMember2 = memberJpaRepository.findById(member2.getId()).get();
         assertThat(findMember1).isEqualTo(member1);
         assertThat(findMember2).isEqualTo(member2);
+
+        Member findMember3 = memberJpaRepository.findFirstByUserId(member1.getUserId()).get();
+        Member findMember4 = memberJpaRepository.findFirstByUserId(member2.getUserId()).get();
+        assertThat(findMember3).isEqualTo(member1);
+        assertThat(findMember4).isEqualTo(member2);
 
         //리스트 조회
         List<Member> all = memberJpaRepository.findAll();

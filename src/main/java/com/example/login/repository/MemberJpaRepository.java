@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -32,9 +31,11 @@ public class MemberJpaRepository {
         return Optional.ofNullable(member);
     }
 
-    public Optional<Member> findByUserid(String userid) {
-        Member member = em.find(Member.class, userid);
-        return Optional.ofNullable(member);
+    public Optional<Member> findFirstByUserId(String userId) {
+        return Optional.ofNullable(em.createQuery(
+                        "select m from Member m where m.userId = :userId", Member.class)
+                .setParameter("userId", userId)
+                .getSingleResult());
     }
 
     public long count() {
