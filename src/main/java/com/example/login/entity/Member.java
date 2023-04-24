@@ -40,6 +40,7 @@ public class Member {
     private String email;
     @Pattern(regexp = "^[가-힣]{3,5}$", message = "한글 3~5")
     private String name;
+    private String ROLE_USER;
 
     public Member(String userId, String password, String email, String name) {
         this.userId = userId;

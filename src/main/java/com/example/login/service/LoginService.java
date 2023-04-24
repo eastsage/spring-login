@@ -16,14 +16,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class LoginService {
+public class LoginService implements UserDetailsService{
     @Value("${jwt.secret}")
     private String secretKey;
     private Long expiredMs = 1000 * 60 * 30l;
     private final MemberRepository memberRepository;
 
     public Member login(String userId, String password) {
-        return memberRepository.findFirstByUserId(userId)
+        return memberRepository.findByUserId(userId)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
     }
@@ -32,15 +32,16 @@ public class LoginService {
         return JwtUtil.createJwt(userId, secretKey, expiredMs);
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-//
-//        Optional<Member> findMember = memberRepository.findFirstByUserId(userId);
-//
-//        if (!findMember.isPresent()) throw new UsernameNotFoundException("존재하지 않는 username 입니다.");
-//
-//        log.info("loadUserByUsername member.userId = {}", userId);
-//
-//        return new SecurityUser(findMember.get());
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+
+        Optional<Member> findMember = memberRepository.findByUserId(userId);
+        log.info("loadUserByUsername member.findMember = {}", findMember);
+
+        if (!findMember.isPresent()) throw new UsernameNotFoundException("존재하지 않는 username 입니다.");
+
+        log.info("loadUserByUsername member.userId = {}", userId);
+
+        return new SecurityUser(findMember.get());
+    }
 }

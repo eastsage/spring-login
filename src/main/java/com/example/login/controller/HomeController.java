@@ -3,6 +3,7 @@ package com.example.login.controller;
 import com.example.login.entity.Member;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,13 @@ public class HomeController {
 
     @GetMapping
     public String homeLogin(
-            @SessionAttribute(name = "loginMember", required = false)Member loginMember, Model model) {
+            Authentication auth, Model model) {
 
-        if (loginMember == null) {
+        if (auth == null) {
             return "home";
         }
 
-        model.addAttribute("member", loginMember);
+        model.addAttribute("member", auth);
         return "loginHome";
     }
 }

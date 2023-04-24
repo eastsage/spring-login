@@ -31,12 +31,12 @@ public class MemberJpaRepository {
         return Optional.ofNullable(member);
     }
 
-    public Optional<Member> findFirstByUserId(String userId) {
-        return Optional.ofNullable(em.createQuery(
-                        "select m from Member m where m.userId = :userId", Member.class)
-                .setParameter("userId", userId)
-                .getSingleResult());
-    }
+//    public Optional<Member> findByUserId(String userId) {
+//        return Optional.ofNullable(em.createQuery(
+//                        "select m from Member m where m.userId = :userId", Member.class)
+//                .setParameter("userId", userId)
+//                .getSingleResult());
+//    }
 
     public long count() {
         return em.createQuery("select count(m) from Member m", Long.class).getSingleResult();

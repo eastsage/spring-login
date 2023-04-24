@@ -14,6 +14,8 @@ public class LoginApplication {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(LoginApplication.class, args);
@@ -21,8 +23,9 @@ public class LoginApplication {
 
     @Bean
     public void addTempUser() {
+        String encoded = bCryptPasswordEncoder.encode("asdasdASD!@#");
         memberRepository.save(new Member(
-                "umjunsik", "asdasdASD!@#", "sd@sd.sd", "엄준식"));
+                "umjunsik", encoded, "sd@sd.sd", "엄준식"));
     }
 
 }
