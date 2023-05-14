@@ -1,6 +1,6 @@
 package com.example.login.controller;
 
-import com.example.login.entity.Member;
+import com.example.login.domain.entity.Member;
 import com.example.login.repository.MemberRepository;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping("add")
+    @GetMapping("/add")
     public String addForm(Member member) {
         return "members/addMemberForm";
     }

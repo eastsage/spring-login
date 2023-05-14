@@ -1,6 +1,6 @@
 package com.example.login.service;
 
-import com.example.login.entity.Member;
+import com.example.login.domain.entity.Member;
 import com.example.login.repository.MemberRepository;
 import com.example.login.security.SecurityUser;
 import com.example.login.utils.JwtUtil;

@@ -1,17 +1,16 @@
 package com.example.login.controller;
 
-import com.example.login.entity.Member;
 import com.example.login.service.LoginService;
-import com.example.login.vo.LoginVO;
+import com.example.login.domain.dto.LoginDto;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @Slf4j
@@ -21,7 +20,7 @@ public class LoginController {
 //    private final UserDetailsServiceImpl userDetailsService;
 
     @GetMapping("/login")
-    public String loginForm(LoginVO loginVO) {
+    public String loginForm(LoginDto loginDto) {
         return "login/loginForm";
     }
 
@@ -52,18 +51,17 @@ public class LoginController {
 //    }
 
     @GetMapping("/memberPage")
-    public String memberPage(@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-                             Model model) {
-        model.addAttribute("member", loginMember);
+    public String memberPage(Authentication auth, Model model) {
+        model.addAttribute("member", auth);
         return "login/memberPage";
     }
 
     @PostMapping("logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+//        if (session != null) {
+//            session.invalidate();
+//        }
         return "redirect:/";
     }
 }

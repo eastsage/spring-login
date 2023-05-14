@@ -1,10 +1,10 @@
-package com.example.login.vo;
+package com.example.login.domain.dto;
 
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class LoginVO {
+public class LoginDto {
     @NotEmpty
     private String userId;
     @NotEmpty
